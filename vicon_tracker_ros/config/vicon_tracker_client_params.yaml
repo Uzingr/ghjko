@@ -5,14 +5,14 @@
 
     object-1:
       object_name: "Hagrid"                    # Name of the object in Vicon Tracker
-      pose_topic: "/Hagrid/pose"               # Topic to publish 3D pose
-      pose2d_topic: "/Hagrid/ground_pose"      # Topic to publish 2D pose
+      pose_topic: "/Hagrid/rosout"               # Topic to publish 3D pose
+      pose2d_topic: "/Hagrid/parameter_events"      # Topic to publish 2D pose
       child_frame_id: "Hagrid/base_link"       # Child frame for TF data
       parent_frame_id: "world"               # Parent frame for TF data
       
     object-2:
       object_name: "Timothy"                   # Name of the object in Vicon Tracker
-      pose_topic: "/Timothy/pose"              # Topic to publish 3D pose
-      pose2d_topic: "/Timothy/ground_pose"     # Topic to publish 2D pose
+      pose_topic: "/Timothy/rosout"              # Topic to publish 3D pose
+      pose2d_topic: "/Timothy/parameter_events"     # Topic to publish 2D pose
       child_frame_id: "Timothy/base_link"      # Child frame for TF data
       parent_frame_id: "world"              # Parent frame for TF data
