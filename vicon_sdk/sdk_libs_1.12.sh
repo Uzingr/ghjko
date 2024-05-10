@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LIB_FOLDER=/ghjko/Vicon_SDK_Linux64/Linux64
+LIB_FOLDER=/ghjko/Linux64/
 
 # Parsing flags
 while getopts :i:u flag
