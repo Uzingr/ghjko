@@ -229,7 +229,7 @@ int main(int argc, char * argv[])
                     viconClient.GetSegmentGlobalTranslation(objectName, segmentName);
 
             // PROVA DI PRINT
-            RCLCPP_INFO(pNode->get_logger(), "objectTranslation_output --> %s ", objectTranslation_output.c_str());
+            // RCLCPP_INFO(pNode->get_logger(), "objectTranslation_output --> %s ", objectTranslation_output.c_str());
 
             if (objectTranslation_output.Result != ViconDataStreamSDK::CPP::Result::Success)
             {
