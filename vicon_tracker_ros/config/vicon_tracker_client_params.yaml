@@ -3,16 +3,16 @@
   ros__parameters:
     server_address: "172.31.19.12"           # Address of the vicon server
 
-   # object-1:
-   #   object_name: "Hagrid"                    # Name of the object in Vicon Tracker
-   #   pose_topic: "/hagrid/pose"               # Topic to publish 3D pose
-   #   pose2d_topic: "/hagrid/ground_pose"      # Topic to publish 2D pose
-   #   child_frame_id: "hagrid/base_link"       # Child frame for TF data
-   #   parent_frame_id: "world"               # Parent frame for TF data
+    object-1:
+      object_name: "Hagrid"                    # Name of the object in Vicon Tracker
+      pose_topic: "/hagrid/hagrid/pose"               # Topic to publish 3D pose
+      pose2d_topic: "/hagrid/hagrid/ground_pose"      # Topic to publish 2D pose
+      child_frame_id: "/hagrid/hagrid/base_link"       # Child frame for TF data
+      parent_frame_id: "world"               # Parent frame for TF data
       
     object-2:
       object_name: "Timothy"                   # Name of the object in Vicon Tracker
-      pose_topic: "/timothy/pose"              # Topic to publish 3D pose
-      pose2d_topic: "/timothy/ground_pose"     # Topic to publish 2D pose
-      child_frame_id: "timothy/base_link"      # Child frame for TF data
+      pose_topic: "/timothy/timothy/pose"              # Topic to publish 3D pose
+      pose2d_topic: "/timothy/timothy/ground_pose"     # Topic to publish 2D pose
+      child_frame_id: "/timothy/timothy/base_link"      # Child frame for TF data
       parent_frame_id: "world"              # Parent frame for TF data
