@@ -216,20 +216,17 @@ int main(int argc, char * argv[])
             objectName = viconClient.GetSubjectName(objectIndex).SubjectName;
 
             // PROVA DI PRINT
-            RCLCPP_INFO(pNode->get_logger(), "objectName --> %s ", objectName.c_str());
+            //RCLCPP_INFO(pNode->get_logger(), "objectName --> %s ", objectName.c_str());
 
             // Get the segment name (required by next calls)
             std::string segmentName = viconClient.GetSegmentName(objectName, 0).SegmentName;
 
             // PROVA DI PRINT
-            RCLCPP_INFO(pNode->get_logger(), "SegmentName --> %s ", segmentName.c_str());
+            //RCLCPP_INFO(pNode->get_logger(), "SegmentName --> %s ", segmentName.c_str());
 
             // Get the global object translation
             ViconDataStreamSDK::CPP::Output_GetSegmentGlobalTranslation objectTranslation_output =
                     viconClient.GetSegmentGlobalTranslation(objectName, segmentName);
-
-            // PROVA DI PRINT
-            // RCLCPP_INFO(pNode->get_logger(), "objectTranslation_output --> %s ", objectTranslation_output.c_str());
 
             if (objectTranslation_output.Result != ViconDataStreamSDK::CPP::Result::Success)
             {
