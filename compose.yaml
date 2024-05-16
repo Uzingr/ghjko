@@ -1,0 +1,6 @@
+services:
+  bridge:
+    build: .
+    privileged: true
+    tty: true
+    network_mode: host
