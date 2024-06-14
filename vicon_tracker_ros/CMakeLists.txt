@@ -24,7 +24,7 @@ install(TARGETS vicon_tracker_client DESTINATION lib/${PROJECT_NAME})
 
 # Aggiungi lo script Python
 install(PROGRAMS
-  vicon_tracker_ros/pose_to_odometry.py
+  src/pose_to_odometry.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
