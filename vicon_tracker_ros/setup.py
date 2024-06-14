@@ -24,7 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pose_to_odometry = vicon_tracker_ros.pose_to_odometry:main',
+            'pose_to_odometry = vicon_tracker_ros.src.pose_to_odometry:main',
         ],
     },
 )
