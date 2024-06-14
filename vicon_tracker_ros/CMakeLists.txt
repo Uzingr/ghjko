@@ -10,7 +10,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(rclpy REQUIRED)
 
+# Aggiungi l'eseguibile C++
 add_executable(vicon_tracker_client src/vicon_tracker_client.cpp)
 ament_target_dependencies(vicon_tracker_client rclcpp geometry_msgs tf2_ros)
 
@@ -18,6 +21,12 @@ target_compile_features(vicon_tracker_client PUBLIC c_std_99 cxx_std_17)  # Requ
 target_link_libraries(vicon_tracker_client ViconDataStreamSDK_CPP ${Boost_LIBRARIES})
 
 install(TARGETS vicon_tracker_client DESTINATION lib/${PROJECT_NAME})
+
+# Aggiungi lo script Python
+install(PROGRAMS
+  vicon_tracker_ros/pose_to_odometry.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY config DESTINATION share/${PROJECT_NAME}/)
