@@ -18,7 +18,7 @@ def generate_launch_description():
     )
 
     node_pose_to_odometry = Node(
-        package='your_package_name',
+        package='vicon_tracker_ros',
         executable='pose_to_odometry',
         name='pose_to_odometry'
     )
