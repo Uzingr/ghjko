@@ -22,10 +22,11 @@ target_link_libraries(vicon_tracker_client ViconDataStreamSDK_CPP ${Boost_LIBRAR
 
 install(TARGETS vicon_tracker_client DESTINATION lib/${PROJECT_NAME})
 
-# Aggiungi lo script Python
+# Aggiungi lo script Python e imposta i permessi di esecuzione
 install(PROGRAMS
   src/pose_to_odometry.py
   DESTINATION lib/${PROJECT_NAME}
+  FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
