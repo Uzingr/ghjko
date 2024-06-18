@@ -1,34 +1,21 @@
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Pose
-from nav_msgs.msg import Odometry
+from geometry_msgs.msg import PoseStamped, Odometry
 
 class PoseToOdometry(Node):
     def __init__(self):
         super().__init__('pose_to_odometry')
+        self.subscription = self.create_subscription(
+            PoseStamped,
+            'pose',
+            self.listener_callback,
+            10)
+        self.publisher = self.create_publisher(Odometry, 'odometry', 10)
 
-        # Iscriviti al topic 'pose'
-        self.pose_subscription = self.create_subscription(
-            Pose,
-            'hagrid/pose',
-            self.pose_callback,
-            10
-        )
-
-        # Publisher per il topic 'mocap_odometry'
-        self.odometry_publisher = self.create_publisher(Odometry, 'mocap_odometry', 10)
-
-    def pose_callback(self, pose_msg):
-        # Crea un messaggio Odometry
+    def listener_callback(self, msg):
         odom_msg = Odometry()
-
-        # Riempie il messaggio Odometry con i dati del messaggio Pose
-        odom_msg.header.stamp = self.get_clock().now().to_msg()
-        odom_msg.header.frame_id = "odom"
-        odom_msg.pose.pose = pose_msg
-
-        # Pubblica il messaggio Odometry
-        self.odometry_publisher.publish(odom_msg)
+        # Conversion logic here
+        self.publisher.publish(odom_msg)
 
 def main(args=None):
     rclpy.init(args=args)
