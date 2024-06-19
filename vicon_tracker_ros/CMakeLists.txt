@@ -30,6 +30,6 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-ament_python_install_package(${src})  # Aggiungi questa riga
+ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src)  # Aggiungi questa riga
 
 ament_package()
