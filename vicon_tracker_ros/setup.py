@@ -26,6 +26,5 @@ setup(
         ],
     },
     package_dir={'': 'src'},
-    py_modules=[os.path.splitext(os.path.basename(path))[0] for path in glob('src/*.py')],
+    py_modules=[os.path.splitext(os.path.basename(path))[0] for path in glob('src/vicon_tracker_ros/*.py')],
 )
-
