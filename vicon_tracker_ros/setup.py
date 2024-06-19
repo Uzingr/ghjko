@@ -22,9 +22,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pose_to_odometry = vicon_tracker_ros.pose_to_odometry:main'
+            'pose_to_odometry = src.pose_to_odometry:main'
         ],
     },
     package_dir={'': 'src'},
-    py_modules=[os.path.splitext(os.path.basename(path))[0] for path in glob('src/vicon_tracker_ros/*.py')],
+    py_modules=[os.path.splitext(os.path.basename(path))[0] for path in glob('src/*.py')],
 )
