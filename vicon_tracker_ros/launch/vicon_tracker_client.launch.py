@@ -16,7 +16,13 @@ def generate_launch_description():
             'vicon_tracker_client_params.yaml'
         )]
     )
+
+    node_vicon_to_odometry = Node(
+        package = 'vicon_tracker_ros',
+        name = 'vicon_to_odometry_node',
+        executable = 'vicon_to_odometry_node'
+    )
     
     ld.add_action(node_vicon_client)
+    ld.add_action(node_vicon_to_odometry)
     return ld
-
