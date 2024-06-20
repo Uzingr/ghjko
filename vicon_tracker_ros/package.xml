@@ -12,7 +12,7 @@
   <depend>rclcpp</depend>
   <depend>geometry_msgs</depend>
   <depend>tf2_ros</depend>
-  # Aggiunta per vicon_to_odometry_node
+  "Aggiunta per vicon_to_odometry_node"
   <depend>nav_msgs</depend>
 
   
