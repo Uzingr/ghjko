@@ -23,6 +23,14 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY config DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 
+# Nodo C++ vicon_to_odometry_node
+add_executable(vicon_to_odometry_node src/vicon_to_odometry_node.cpp)
+ament_target_dependencies(vicon_to_odometry_node rclcpp geometry_msgs)
+
+target_compile_features(vicon_to_odometry_node PUBLIC c_std_99 cxx_std_17)
+install(TARGETS vicon_to_odometry_node DESTINATION lib/${PROJECT_NAME})
+
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
