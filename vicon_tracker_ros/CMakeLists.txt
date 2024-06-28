@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(px4_msgs REQUIRED)
 
 add_executable(vicon_tracker_client src/vicon_tracker_client.cpp)
 ament_target_dependencies(vicon_tracker_client rclcpp geometry_msgs tf2_ros)
