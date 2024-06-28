@@ -5,6 +5,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# Aggiungi il percorso di installazione di px4_msgs
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};~/vicon_tracker_ros/install/px4_msgs")
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -26,14 +29,12 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY config DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 
-# vicon_to_odometry_node executable
+# vicon_to_vehicle_odometry_node executable
 add_executable(vicon_to_vehicle_odometry_node src/vicon_to_vehicle_odometry_node.cpp)
 ament_target_dependencies(vicon_to_vehicle_odometry_node rclcpp geometry_msgs nav_msgs px4_msgs)
 
 target_compile_features(vicon_to_vehicle_odometry_node PUBLIC c_std_99 cxx_std_17)
 install(TARGETS vicon_to_vehicle_odometry_node DESTINATION lib/${PROJECT_NAME})
-
-
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
