@@ -6,7 +6,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # Aggiungi il percorso di installazione di px4_msgs
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};~/vicon_tracker_ros/install/px4_msgs")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};~/vicon_tracker_ros/src/px4_msgs")
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
