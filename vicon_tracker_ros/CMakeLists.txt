@@ -20,7 +20,7 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(px4_msgs REQUIRED)
+find_package(px4_msgs REQUIRED PATHS "../src/px4_msgs/install/share/px4_msgs/cmake")
 
 # get all msg files
 set(MSGS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/msg")
