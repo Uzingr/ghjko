@@ -11,8 +11,9 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav_msgs REQUIRED)
-# find_package(px4_msgs REQUIRED)
+find_package(px4_msgs REQUIRED)
 
+# vicon_tracker_client executable
 add_executable(vicon_tracker_client src/vicon_tracker_client.cpp)
 ament_target_dependencies(vicon_tracker_client rclcpp geometry_msgs tf2_ros)
 
@@ -25,13 +26,12 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY config DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 
-# Nodo C++ vicon_to_odometry_node
-add_executable(vicon_to_vehicle_odometry_node src/vicon_to_odometry_node.cpp)
+# vicon_to_odometry_node executable
+add_executable(vicon_to_vehicle_odometry_node src/vicon_to_vehicle_odometry_node.cpp)
 ament_target_dependencies(vicon_to_vehicle_odometry_node rclcpp geometry_msgs nav_msgs px4_msgs)
 
 target_compile_features(vicon_to_vehicle_odometry_node PUBLIC c_std_99 cxx_std_17)
 install(TARGETS vicon_to_vehicle_odometry_node DESTINATION lib/${PROJECT_NAME})
-
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
