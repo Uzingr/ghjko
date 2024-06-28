@@ -7,6 +7,7 @@ endif()
 
 # Specifica il percorso di installazione di px4_msgs
 set(px4_msgs_DIR "ghjko/vicon_tracker_ros/src/px4_msgs")
+include(${CMAKE_SOURCE_DIR}/cmake/Modules/px4_msgs-config.cmake)
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
