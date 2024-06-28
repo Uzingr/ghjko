@@ -1,53 +1,83 @@
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/pose.hpp>
-#include <nav_msgs/msg/odometry.hpp>
+#include <px4_msgs/msg/vehicle_odometry.hpp>
 
-class ViconToOdometryNode : public rclcpp::Node
+class ViconToVehicleOdometryNode : public rclcpp::Node
 {
 public:
-    ViconToOdometryNode()
-    : Node("vicon_to_odometry_node")
+    ViconToVehicleOdometryNode()
+    : Node("vicon_to_vehicle_odometry_node")
     {
         // Subscription to the pose topic
         pose_subscription_ = this->create_subscription<geometry_msgs::msg::Pose>(
-            "Hagrid/pose", 10, std::bind(&ViconToOdometryNode::pose_callback, this, std::placeholders::_1));
+            "Hagrid/pose", 10, std::bind(&ViconToVehicleOdometryNode::pose_callback, this, std::placeholders::_1));
 
-        // Publisher to the odometry topic
-        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/fmu/out/pose_to_odometry", 10);
+        // Publisher to the PX4 vehicle odometry topic
+        odom_publisher_ = this->create_publisher<px4_msgs::msg::VehicleOdometry>("fmu/in/vehicle_odometry", 10);
     }
 
 private:
     void pose_callback(const geometry_msgs::msg::Pose::SharedPtr msg)
     {
-        // Create and publish an odometry message
-        nav_msgs::msg::Odometry odom_msg;
-        odom_msg.header.stamp = this->get_clock()->now();
-        odom_msg.header.frame_id = "odom";
-        odom_msg.child_frame_id = "base_link";
+        // Create and publish a vehicle odometry message
+        px4_msgs::msg::VehicleOdometry vo_msg;
+        vo_msg.timestamp = this->get_clock()->now().nanoseconds() / 1000; // PX4 expects timestamp in microseconds
+        vo_msg.timestamp_sample = vo_msg.timestamp;
+
+        // Set the position and orientation frame of reference
+        vo_msg.pose_frame = px4_msgs::msg::VehicleOdometry::POSE_FRAME_NED;
 
         // Set the position
-        odom_msg.pose.pose.position.x = msg->position.x;
-        odom_msg.pose.pose.position.y = msg->position.y;
-        odom_msg.pose.pose.position.z = msg->position.z;
+        vo_msg.position[0] = msg->position.x;
+        vo_msg.position[1] = msg->position.y;
+        vo_msg.position[2] = msg->position.z;
 
-        // Set the orientation
-        odom_msg.pose.pose.orientation.x = msg->orientation.x;
-        odom_msg.pose.pose.orientation.y = msg->orientation.y;
-        odom_msg.pose.pose.orientation.z = msg->orientation.z;
-        odom_msg.pose.pose.orientation.w = msg->orientation.w;
+        // Set the orientation (quaternion)
+        vo_msg.q[0] = msg->orientation.w;
+        vo_msg.q[1] = msg->orientation.x;
+        vo_msg.q[2] = msg->orientation.y;
+        vo_msg.q[3] = msg->orientation.z;
 
-        // Publish the odometry message
-        odom_publisher_->publish(odom_msg);
+        // Set velocity to NaN since we don't have this data from the Vicon system
+        vo_msg.velocity_frame = px4_msgs::msg::VehicleOdometry::VELOCITY_FRAME_UNKNOWN;
+        vo_msg.velocity[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity[2] = std::numeric_limits<float>::quiet_NaN();
+
+        // Set angular velocity to NaN since we don't have this data from the Vicon system
+        vo_msg.angular_velocity[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.angular_velocity[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.angular_velocity[2] = std::numeric_limits<float>::quiet_NaN();
+
+        // Set variance to NaN
+        vo_msg.position_variance[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.position_variance[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.position_variance[2] = std::numeric_limits<float>::quiet_NaN();
+
+        vo_msg.orientation_variance[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.orientation_variance[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.orientation_variance[2] = std::numeric_limits<float>::quiet_NaN();
+
+        vo_msg.velocity_variance[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity_variance[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity_variance[2] = std::numeric_limits<float>::quiet_NaN();
+
+        // Set reset counter and quality
+        vo_msg.reset_counter = 0;
+        vo_msg.quality = -1;
+
+        // Publish the vehicle odometry message
+        odom_publisher_->publish(vo_msg);
     }
 
     rclcpp::Subscription<geometry_msgs::msg::Pose>::SharedPtr pose_subscription_;
-    rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
+    rclcpp::Publisher<px4_msgs::msg::VehicleOdometry>::SharedPtr odom_publisher_;
 };
 
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<ViconToOdometryNode>());
+    rclcpp::spin(std::make_shared<ViconToVehicleOdometryNode>());
     rclcpp::shutdown();
     return 0;
 }
