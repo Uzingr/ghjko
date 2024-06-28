@@ -5,6 +5,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+set(CMAKE_MODULE_PATH
+  {CMAKE_MODULE_PATH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules
+)  
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -33,10 +38,7 @@ ament_target_dependencies(vicon_to_vehicle_odometry_node rclcpp geometry_msgs na
 target_compile_features(vicon_to_vehicle_odometry_node PUBLIC c_std_99 cxx_std_17)
 install(TARGETS vicon_to_vehicle_odometry_node DESTINATION lib/${PROJECT_NAME})
 
-set(CMAKE_MODULE_PATH
-  {CMAKE_MODULE_PATH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules
-)  
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
