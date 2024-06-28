@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.8)
 project(vicon_tracker_ros)
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+# Specifica il percorso di installazione di px4_msgs
+set(px4_msgs_DIR "/ghjko/src/px4_msgs/share/px4_msgs/cmake")
+
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
