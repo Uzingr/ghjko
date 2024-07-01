@@ -2,17 +2,10 @@ cmake_minimum_required(VERSION 3.8)
 project(vicon_tracker_ros)
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-# Specifica il percorso di installazione di px4_msgs
-set(px4_msgs_DIR "/ghjko/vicon_tracker_ros/src/px4_msgs")
-
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
-
-# Specifica il percorso di installazione di px4_msgs
-# set(px4_msgs_DIR "ghjko/vicon_tracker_ros/src/px4_msgs")
-# include(${CMAKE_SOURCE_DIR}/cmake/Modules/px4_msgs-config.cmake)
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -20,11 +13,7 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(px4_msgs REQUIRED PATHS "/ghjko/vicon_tracker_ros/src/px4_msgs")
-
-# get all msg files
-set(MSGS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/msg")
-file(GLOB PX4_MSGS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${MSGS_DIR}/*.msg")
+find_package(px4_msgs REQUIRED)
 
 # vicon_tracker_client executable
 add_executable(vicon_tracker_client src/vicon_tracker_client.cpp)
@@ -40,7 +29,7 @@ install(DIRECTORY config DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 
 # vicon_to_vehicle_odometry_node executable
-add_executable(vicon_to_vehicle_odometry_node src/vicon_to_vehicle_odometry_node)
+add_executable(vicon_to_vehicle_odometry_node src/vicon_to_vehicle_odometry_node.cpp)
 ament_target_dependencies(vicon_to_vehicle_odometry_node rclcpp geometry_msgs nav_msgs)
 
 # vicon_to_px4 executable
