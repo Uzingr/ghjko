@@ -1,18 +1,19 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>vicon_tracker_ros</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>Vicon Tracker ROS integration</description>
   <maintainer email="you@example.com">your_name</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <depend>px4_msgs</depend>
   <depend>rclcpp</depend>
   <depend>geometry_msgs</depend>
   <depend>tf2_ros</depend>
   <depend>nav_msgs</depend>
-  <depend>px4_msgs</depend>
+  
 
   <export>
     <build_type>ament_cmake</build_type>
