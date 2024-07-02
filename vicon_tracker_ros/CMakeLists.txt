@@ -13,7 +13,7 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(px4_msgs REQUIRED)
+find_package(px4_msgs REQUIRED PATHS "/ghjko/vicon_tracker_ros/src/px4_msgs/install/share/px4_msgs/cmake")
 
 # vicon_tracker_client executable
 add_executable(vicon_tracker_client src/vicon_tracker_client.cpp)
