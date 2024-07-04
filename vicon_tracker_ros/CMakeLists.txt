@@ -32,7 +32,7 @@ install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 add_executable(vicon_to_odometry_node src/vicon_to_odometry_node.cpp)
 ament_target_dependencies(vicon_to_odometry_node rclcpp geometry_msgs px4_msgs)
 
-target_compile_features(vicon_to_px4 PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_features(vicon_to_odometry_node PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
 install(TARGETS vicon_to_odometry_node DESTINATION lib/${PROJECT_NAME})
 
