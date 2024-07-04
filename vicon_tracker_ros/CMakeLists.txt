@@ -38,3 +38,4 @@ install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 
 # vicon_to_vehicle_odometry_node executable
 add_executable(vicon_to_vehicle_odometry_node src/vicon_to_odometry_node.cpp)
+ament_target_dependencies(vicon_to_vehicle_odometry_node rclcpp geometry_msgs tf2_ros px4_msgs)
