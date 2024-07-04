@@ -13,7 +13,7 @@ public:
             "Hagrid/pose", 10, std::bind(&ViconToVehicleOdometryNode::pose_callback, this, std::placeholders::_1));
 
         // Publisher to the PX4 vehicle odometry topic
-        odom_publisher_ = this->create_publisher<px4_msgs::msg::VehicleOdometry>("fmu/in/vehicle_odometry", 10);
+        odom_publisher_ = this->create_publisher<px4_msgs::msg::VehicleOdometry>("fmu/in/vehicle_visual_odometry", 10);
     }
 
 private:
