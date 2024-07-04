@@ -37,4 +37,4 @@ install(DIRECTORY config DESTINATION share/${PROJECT_NAME}/)
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME}/)
 
 # vicon_to_vehicle_odometry_node executable
-add_executable(pose_to_odometry src/pose_to_odometry_node)
+add_executable(px4_mocap_pubsub src/pose_to_odometry_node)
