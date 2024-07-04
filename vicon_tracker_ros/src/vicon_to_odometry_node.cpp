@@ -6,7 +6,7 @@ class ViconToVehicleOdometryNode : public rclcpp::Node
 {
 public:
     ViconToVehicleOdometryNode()
-    : Node("vicon_to_vehicle_odometry_node")
+    : Node("vicon_to_odometry_node")
     {
         // Subscription to the pose topic
         pose_subscription_ = this->create_subscription<geometry_msgs::msg::Pose>(
