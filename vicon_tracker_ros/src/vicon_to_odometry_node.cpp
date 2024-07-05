@@ -33,16 +33,16 @@ private:
 
         // Create and publish a vehicle odometry message
         px4_msgs::msg::VehicleOdometry vo_msg;
-        vo_msg.timestamp = this->get_clock()->now();  // PX4 expects timestamp as rclcpp::Time
+        vo_msg.timestamp = this->get_clock()->now().nanoseconds() / 1000; // PX4 expects timestamp in microseconds
+        vo_msg.timestamp_sample = vo_msg.timestamp;
 
         // Set the position and orientation frame of reference
-        vo_msg.frame_id = 1;  // Assuming NED frame (North-East-Down)
-        vo_msg.child_frame_id = 1;  // Assuming same frame as parent (NED)
+        vo_msg.pose_frame = px4_msgs::msg::VehicleOdometry::POSE_FRAME_NED;
 
         // Set the position
-        vo_msg.x = msg->position.x;
-        vo_msg.y = msg->position.y;
-        vo_msg.z = msg->position.z;
+        vo_msg.position[0] = msg->position.x;
+        vo_msg.position[1] = msg->position.y;
+        vo_msg.position[2] = msg->position.z;
 
         // Set the orientation (quaternion)
         vo_msg.q[0] = msg->orientation.w / norm;
@@ -52,25 +52,35 @@ private:
 
         // Log the position and orientation
         RCLCPP_INFO(this->get_logger(), "Publishing odometry: position [%.2f, %.2f, %.2f], orientation [%.2f, %.2f, %.2f, %.2f]",
-                    vo_msg.x, vo_msg.y, vo_msg.z, vo_msg.q[0], vo_msg.q[1], vo_msg.q[2], vo_msg.q[3]);
+                    vo_msg.position[0], vo_msg.position[1], vo_msg.position[2], vo_msg.q[0], vo_msg.q[1], vo_msg.q[2], vo_msg.q[3]);
 
         // Set velocity to NaN since we don't have this data from the Vicon system
-        vo_msg.vx = std::numeric_limits<float>::quiet_NaN();
-        vo_msg.vy = std::numeric_limits<float>::quiet_NaN();
-        vo_msg.vz = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity_frame = px4_msgs::msg::VehicleOdometry::VELOCITY_FRAME_NED;
+        vo_msg.velocity[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity[2] = std::numeric_limits<float>::quiet_NaN();
 
         // Set angular velocity to NaN since we don't have this data from the Vicon system
-        vo_msg.rollspeed = std::numeric_limits<float>::quiet_NaN();
-        vo_msg.pitchspeed = std::numeric_limits<float>::quiet_NaN();
-        vo_msg.yawspeed = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.angular_velocity[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.angular_velocity[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.angular_velocity[2] = std::numeric_limits<float>::quiet_NaN();
 
-        // Set position and orientation variance to NaN
-        vo_msg.pose_covariance.fill(std::numeric_limits<float>::quiet_NaN());
-        vo_msg.covariance_velocity.fill(std::numeric_limits<float>::quiet_NaN());
+        // Set variance to NaN
+        vo_msg.position_variance[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.position_variance[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.position_variance[2] = std::numeric_limits<float>::quiet_NaN();
+
+        vo_msg.orientation_variance[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.orientation_variance[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.orientation_variance[2] = std::numeric_limits<float>::quiet_NaN();
+
+        vo_msg.velocity_variance[0] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity_variance[1] = std::numeric_limits<float>::quiet_NaN();
+        vo_msg.velocity_variance[2] = std::numeric_limits<float>::quiet_NaN();
 
         // Set reset counter and quality
         vo_msg.reset_counter = 0;
-        vo_msg.pose_quality = 1;  // Set a positive quality value
+        vo_msg.quality = 1;  // Set a positive quality value
 
         // Publish the vehicle odometry message
         odom_publisher_->publish(vo_msg);
