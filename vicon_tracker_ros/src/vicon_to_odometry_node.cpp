@@ -1,6 +1,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/pose.hpp>
 #include <px4_msgs/msg/vehicle_odometry.hpp>
+#include <cmath>
 
 class ViconToVehicleOdometryNode : public rclcpp::Node
 {
@@ -19,6 +20,17 @@ public:
 private:
     void pose_callback(const geometry_msgs::msg::Pose::SharedPtr msg)
     {
+        // Normalize the quaternion
+        float norm = std::sqrt(msg->orientation.x * msg->orientation.x +
+                               msg->orientation.y * msg->orientation.y +
+                               msg->orientation.z * msg->orientation.z +
+                               msg->orientation.w * msg->orientation.w);
+
+        if (norm == 0.0) {
+            RCLCPP_WARN(this->get_logger(), "Quaternion normalization failed, norm is zero.");
+            return;
+        }
+
         // Create and publish a vehicle odometry message
         px4_msgs::msg::VehicleOdometry vo_msg;
         vo_msg.timestamp = this->get_clock()->now().nanoseconds() / 1000; // PX4 expects timestamp in microseconds
@@ -33,13 +45,17 @@ private:
         vo_msg.position[2] = msg->position.z;
 
         // Set the orientation (quaternion)
-        vo_msg.q[0] = msg->orientation.w;
-        vo_msg.q[1] = msg->orientation.x;
-        vo_msg.q[2] = msg->orientation.y;
-        vo_msg.q[3] = msg->orientation.z;
+        vo_msg.q[0] = msg->orientation.w / norm;
+        vo_msg.q[1] = msg->orientation.x / norm;
+        vo_msg.q[2] = msg->orientation.y / norm;
+        vo_msg.q[3] = msg->orientation.z / norm;
+
+        // Log the position and orientation
+        RCLCPP_INFO(this->get_logger(), "Publishing odometry: position [%.2f, %.2f, %.2f], orientation [%.2f, %.2f, %.2f, %.2f]",
+                    vo_msg.position[0], vo_msg.position[1], vo_msg.position[2], vo_msg.q[0], vo_msg.q[1], vo_msg.q[2], vo_msg.q[3]);
 
         // Set velocity to NaN since we don't have this data from the Vicon system
-        vo_msg.velocity_frame = px4_msgs::msg::VehicleOdometry::VELOCITY_FRAME_UNKNOWN;
+        vo_msg.velocity_frame = px4_msgs::msg::VehicleOdometry::VELOCITY_FRAME_NED;
         vo_msg.velocity[0] = std::numeric_limits<float>::quiet_NaN();
         vo_msg.velocity[1] = std::numeric_limits<float>::quiet_NaN();
         vo_msg.velocity[2] = std::numeric_limits<float>::quiet_NaN();
@@ -64,7 +80,7 @@ private:
 
         // Set reset counter and quality
         vo_msg.reset_counter = 0;
-        vo_msg.quality = -1;
+        vo_msg.quality = 1;  // Set a positive quality value
 
         // Publish the vehicle odometry message
         odom_publisher_->publish(vo_msg);
