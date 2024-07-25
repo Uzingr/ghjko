@@ -13,6 +13,7 @@ def generate_launch_description():
 
     launch_me = LaunchDescription() # Initialize launch description
 
+    """ Lo commento perchè io già eseguo il nodo ma su vicon_tracker_ros quindi questa parte non mi serve
     # Node for streaming VICON data in the IFL
     hostname = '172.31.19.12' # Works with Wifi in IFL
     buffer_size = 256
@@ -23,6 +24,7 @@ def generate_launch_description():
             'namespace': topic_namespace}],
         # condition=LaunchConfigurationEquals(primary_launch_mode, 'indoor')
     )
+    """
 
     # Node for passing the VICON data to the PX4
     px4_pubsub_node = Node(
