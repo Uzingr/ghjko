@@ -5,7 +5,7 @@ Written by Adam Garlow
 This node follows a straightforward sub/pub framework to take mocap messages
 and publish them on the desired px4 microRTPS bridge topic
 
-MoCap messages received on topic: '/vicon/X500_v2_IRcam/X500_v2_IRcam'
+MoCap messages received on topic: '/vicon/X500_v2_IRcam/X500_v2_IRcam' --> nel nostro caso il topic dei messaggi MoCap arriveranno su /Hagrid/pose
 
 PX4 messages published on topic: '/fmu/vehicle_visual_odometry/in'
 
@@ -36,7 +36,7 @@ class MoCapPubSub(Node):
 
         # Initialize subscriber to mocap(VICON) topic
         self.mocap_sub = self.create_subscription(Position, 
-            '/vicon/Brian_X500/Brian_X500', self.mocap_callback, 10)
+            '/Hagrid/pose', self.mocap_callback, 10)
 
         # Initialize subscriber to PX4 timesync topic
         self.timesync_sub = self.create_subscription(TimesyncStatus, 
