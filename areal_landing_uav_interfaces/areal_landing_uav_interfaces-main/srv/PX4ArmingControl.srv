@@ -1,0 +1,4 @@
+# Call and response text format to control arming and disarming the quadcopter
+string command
+---
+string response

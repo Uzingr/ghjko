@@ -1,0 +1,11 @@
+# Fields are from the OffboardControlMode.msg file
+# Set all control modes to false by default
+uint64 timestamp    # time since system start (microseconds)
+bool position False
+bool velocity False
+bool acceleration False
+bool attitude False
+bool body_rate False
+bool actuator False
+---
+string response

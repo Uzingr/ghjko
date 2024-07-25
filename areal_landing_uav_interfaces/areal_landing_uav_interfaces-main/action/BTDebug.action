@@ -1,0 +1,9 @@
+# Goal definition
+string debug_message
+builtin_interfaces/Duration wait_time
+---
+# Result definition
+string result
+---
+# Feedback definition
+builtin_interfaces/Duration time_left

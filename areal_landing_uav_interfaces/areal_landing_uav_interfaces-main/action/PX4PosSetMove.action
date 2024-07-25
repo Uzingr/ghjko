@@ -1,0 +1,13 @@
+# Goal Request definition
+float32[3] position_set
+float32 tolerance
+---
+# Result definition
+string result
+float32[3] position_reached
+float32 time_elapsed_final
+---
+# Feedback definition
+float32 time_elapsed_in_progress
+float32 distance_to_setpoint
+float32[3] position_current

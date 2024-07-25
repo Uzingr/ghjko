@@ -1,0 +1,8 @@
+# Goal definition
+string activation_message
+---
+# Result definition
+string result
+---
+# Feedback definition
+uint16 counter
