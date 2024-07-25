@@ -14,7 +14,7 @@ def generate_launch_description():
     launch_me = LaunchDescription() # Initialize launch description
 
     # Node for streaming VICON data in the IFL
-    hostname = '192.168.10.2' # Works with Wifi in IFL
+    hostname = '172.31.19.12' # Works with Wifi in IFL
     buffer_size = 256
     topic_namespace = 'vicon'
     vicon_streaming_node = Node(
